@@ -9,6 +9,11 @@ import UIKit
 
 final class ViewController: UIViewController {
     
+    static func makeFromStoryboard() -> ViewController {
+            let vc = UIStoryboard.viewController
+            return vc
+        }
+    
     private let CELL_NIB_NAME = "CollectionViewCell"
       private let CELL_ID = "CollectionViewCell"
     
@@ -23,8 +28,7 @@ final class ViewController: UIViewController {
         }
     }
     
-    
-    
+    private var model = CalendarDetailModel.init()
     private let dateManager = MonthDateManager()
    private let itemSize: CGFloat = (UIScreen.main.bounds.width - 60) / 7
     private let weeks = ["日","月", "火", "水", "木", "金", "土"]
@@ -40,7 +44,7 @@ final class ViewController: UIViewController {
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumLineSpacing = 3
         collectionViewLayout.minimumInteritemSpacing = 0
-        collectionViewLayout.itemSize = CGSize(width: itemSize, height: 120)
+        collectionViewLayout.itemSize = CGSize(width: itemSize, height: 200)
 //        dateManager.createToday{ [weak self] result in
 //                   switch result {
 //                   case.failure(let error):
@@ -66,6 +70,12 @@ final class ViewController: UIViewController {
                 title = dateManager.monthString
     
 }
+    
+    @IBAction func tapAdd(_ sender: Any) {
+        Router.shared.showAdd(from: self, model: model)
+    }
+    
+    
 
 }
 
@@ -108,6 +118,9 @@ extension ViewController:UICollectionViewDataSource {
                                }
                            }
                        }
+        let selectedBGView = UIView(frame: cell.frame)
+            selectedBGView.backgroundColor = .blue
+            cell.selectedBackgroundView = selectedBGView
                 return cell
             }
 }
@@ -118,8 +131,8 @@ extension ViewController:UICollectionViewDelegate {
                    return
                }
                title = dateManager.days[indexPath.row].string(format: "YYYY/MM/dd")
+              model.day = dateManager.days[indexPath.row].string(format: "YYYY/MM/dd")
            }
-    
 }
 
 extension ViewController:UICollectionViewDelegateFlowLayout{
@@ -129,7 +142,7 @@ extension ViewController:UICollectionViewDelegateFlowLayout{
         if indexPath.section == 0 {
             height = 50
         }else {
-            height = 100
+            height = 120
         }
         return CGSize(width: 55, height: height)
     }
