@@ -7,16 +7,16 @@
 
 import UIKit
 
-class AddViewController: UIViewController {
+final class AddViewController: UIViewController {
     
     static func makeFromStoryboard(model:CalendarDetailModel) -> AddViewController {
-            let vc = UIStoryboard.addViewController
-            vc.model = model
-            return vc
-        }
+        let vc = UIStoryboard.addViewController
+        vc.model = model
+        return vc
+    }
     
     @IBOutlet private weak var dayLabel: UILabel!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet private weak var textView: UITextView!
     
     private var model = CalendarDetailModel.init()
     
@@ -27,5 +27,5 @@ class AddViewController: UIViewController {
         print(model)
     }
     
-
+    
 }
