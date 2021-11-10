@@ -11,16 +11,16 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
     }
-
+    
     
     
     func configure(user: Model) {
         titleLabel.text = user.text
         titleLabel.textColor = user.textColor
-      }
+    }
 }
